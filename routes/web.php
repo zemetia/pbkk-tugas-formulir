@@ -14,8 +14,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('formulir');
 });
+
+Route::get('/formulir', function () {
+    return view('livewire.formulir');
+})->name('formulir');
 
 Route::middleware([
     'auth:sanctum',
