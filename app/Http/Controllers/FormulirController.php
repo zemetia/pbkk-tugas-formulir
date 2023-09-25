@@ -6,9 +6,11 @@ use App\Exceptions\UserException;
 use Illuminate\Http\Request;
 use App\Models\Formulir;
 use App\Models\ImageUpload;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\File;
+use Throwable;
 
 class FormulirController extends Controller
 {
@@ -51,6 +53,22 @@ class FormulirController extends Controller
             $request->input('height'),
             $photo
         );
+
+        DB::beginTransaction();
+        try {
+            DB::table('formulir')->upsert([
+                'id' => $formulir->getId()->toString(),
+                'email' => $formulir->getEmail(),
+                'name' => $formulir->getName(),
+                'height' => $formulir->getHeight(),
+                'age' => $formulir->getAge(),
+                'file_location' => $formulir->getPhotoUrl()->full_path
+            ], 'id');
+        } catch (Throwable $e) {
+            DB::rollBack();
+            throw $e;
+        }
+        DB::commit();
 
         $response = array(["name" => $formulir->getName(), "photo" => $photo->full_path, "ext" => $request->file('foto')->getClientOriginalExtension()]);
 
