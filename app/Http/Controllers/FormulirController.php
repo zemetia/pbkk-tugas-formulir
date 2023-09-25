@@ -17,6 +17,7 @@ class FormulirController extends Controller
 
         $validator = Validator::make($request->all(), [
             "name" => "required|min:4|max:20",
+            "email" => "required|email",
             "age" => "required|integer|min:12",
             "height" => "required|numeric|between:2.50,99.99",
             "foto" => [
@@ -45,6 +46,7 @@ class FormulirController extends Controller
 
         $formulir = Formulir::create(
             $request->input('name'),
+            $request->input('email'),
             $request->input('age'),
             $request->input('height'),
             $photo

@@ -17,9 +17,9 @@ Route::get('/', function () {
     return redirect()->route('formulir');
 });
 
-// Route::get('/formulir', function () {
-//     return view('livewire.formulir');
-// })->name('formulir');
+Route::get('/formulir', function () {
+    return view('livewire.formulir');
+})->name('formulir');
 
 Route::middleware([
     'auth:sanctum',
