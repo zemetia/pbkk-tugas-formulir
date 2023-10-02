@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FormulirController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,8 @@ Route::get('/', function () {
 Route::get('/formulir', function () {
     return view('livewire.formulir');
 })->name('formulir');
+
+Route::get('/ingpo', [FormulirController::class, 'listFormulirView']);
 
 Route::middleware([
     'auth:sanctum',

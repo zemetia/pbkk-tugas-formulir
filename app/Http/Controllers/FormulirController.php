@@ -74,4 +74,14 @@ class FormulirController extends Controller
 
         return $this->successWithData($response, "Berhasil Mengisi Formulir");
     }
+
+    public function listFormulirView(Request $request)
+    {
+        $ingpo = DB::table('formulir')->get();
+        $data = array(
+            "ingpo" => $ingpo
+        );
+        $view = view('livewire.ingpo', $data);
+        return $view;
+    }
 }
